@@ -1,0 +1,12 @@
+.div-container {
+    height: auto;
+    background-color: rgb(231, 226, 236);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0px 40px;
+    padding-bottom: 20px;
+    margin: 0px 20px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+
+}
