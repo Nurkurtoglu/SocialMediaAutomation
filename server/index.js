@@ -3,9 +3,11 @@ const server = express();
 const mediaAutomationRouter = require("./routers/mediaAutomationRouter");
 const logger = require('./middleware/logger');
 const errorHandling = require('./middleware/errorHandling');
+const cors = require("cors")
 
 server.use(logger);
 server.use(express.json());
+server.use(cors());
 
 server.use("/media", mediaAutomationRouter);
 

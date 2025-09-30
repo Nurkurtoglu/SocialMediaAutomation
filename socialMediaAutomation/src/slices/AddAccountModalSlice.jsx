@@ -2,47 +2,40 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from "axios";
 
 
+
 const initialState = {
-    // todoText: [],
+    mediaModalData: [],
     // status: "idle",
     // error: null
 }
 
+export const addMediaData = createAsyncThunk("media/addMedia", async (mediaModalData) => {
+    const res = await axios.post("http://localhost:5000/media", mediaModalData);
+    console.log(res);
+    return res.data;
+});
 
-export const todoSlice = createSlice({
-    name: 'todo',
+
+export const addMediaSlice = createSlice({
+    name: 'modal',
     initialState,
     reducers: {
 
     },
     extraReducers: (builder) => {
-        // builder
-        //     .addCase(getTodosData.pending, (state) => {
-        //         state.status = "loading";
-        //     })
-        //     .addCase(getTodosData.fulfilled, (state, action) => {
-        //         state.status = "succeeded";
-        //         state.todoText = action.payload;
-        //     });
 
-        // builder.addCase(addTodoData.pending, (state) => {
-        //     state.status = "loading";
-        // }).addCase(addTodoData.fulfilled, (state, action) => {
-        //     state.status = "succeeded";
-        //     state.todoText.push(action.payload);
-        // });
+        builder.addCase(addMediaData.pending, (state) => {
+            //state.status = "loading";
+        }).addCase(addMediaData.fulfilled, (state, action) => {
+            //state.status = "succeeded";
+            state.mediaModalData.push(action.payload);
+        });
 
-        // builder.addCase(deleteTodoData.pending, (state) => {
-        //     state.status = "loading";
-        // }).addCase(deleteTodoData.fulfilled, (state, action) => {
-        //     state.status = "succeeded";
-        //     state.todoText = state.todoText.filter((todo) => todo.todo_id !== action.payload);
-        // });
     }
 });
 
 // this is for dispatch
-export const { } = todoSlice.actions;
+export const { } = addMediaSlice.actions;
 
 // this is for configureStore
-export default todoSlice.reducer;
+export default addMediaSlice.reducer;

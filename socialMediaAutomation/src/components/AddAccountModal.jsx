@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, use } from 'react'
 import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
@@ -13,8 +14,16 @@ import { saveFormSchema } from '../schemas/SaveFormSchemas';
 import { useFormik } from 'formik';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { useDispatch, useSelector } from "react-redux";
+import { addMediaData } from "../slices/AddAccountModalSlice";
+//import { useEffect } from 'react';
 
 function AddAccountModal({ addRow }) {
+    const dispatch = useDispatch();
+
+    const handleAddMedia = () => {
+        dispatch(addMediaData({ link: values.mediaLink, name: values.mediaName, description: values.description }));
+    };
 
 
     const submit = (values, action) => {
@@ -56,6 +65,7 @@ function AddAccountModal({ addRow }) {
     const addDataGrid = () => {
         if (values.mediaLink && values.mediaName && !errors.mediaLink && !errors.mediaName && !errors.description) {
             addRow(values.mediaLink, values.mediaName, values.description);
+            handleAddMedia();
             setSnackbar({ open: true, severity: 'success', message: 'Yeni hesap başarıyla eklendi!' });
             handleClose();
 
@@ -64,17 +74,30 @@ function AddAccountModal({ addRow }) {
         };
     };
 
+
+
     return (
         <div>
-            <Button
-                ref={buttonRef}
-                sx={btn_style}
-                onClick={handleOpen}
-                variant="contained"
-                startIcon={<PlaylistAddIcon />}
-            >
-                Yeni Hesap Ekle
-            </Button>
+            <Box >
+                <Button
+                    ref={buttonRef}
+                    sx={btn_style}
+                    onSubmit={handleAddMedia}
+                    onClick={handleOpen}
+                    variant="contained"
+                    startIcon={<PlaylistAddIcon />}
+                >
+                    Yeni Hesap Ekle
+                </Button>
+                <Backdrop
+                    sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+                    open={open}
+                    onClick={handleClose}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+            </Box>
+
 
             <form onSubmit={handleSubmit}>
                 <Box
@@ -107,7 +130,7 @@ function AddAccountModal({ addRow }) {
                                 <TextField
                                     required
                                     size="small"
-                                    label="Sosyal Media Linki"
+                                    label="Sosyal Media mediaLinki"
                                     color="secondary"
                                     name="mediaLink"
                                     sx={style_modal_text}

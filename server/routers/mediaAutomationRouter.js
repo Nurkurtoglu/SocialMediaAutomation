@@ -17,72 +17,90 @@ router.get("/", async (req, res, next) => {
 });
 
 
-// router.post("/", async (req, res, next) => {
-//     try {
-//         const newTodo = req.body;
-//         console.log("POST ile gelen veri:", newTodo);
+router.get("/:id", async (req, res, next) => {
+    try {
+        const id = Number(req.params.id);
 
-//         if (newTodo.todo_text) {
-//             const result = await todo.addTodo(newTodo);
-
-//             console.log(result);
-//             return res.status(201).json(result);
-//         } else {
-//             next({
-//                 statusCode: 400,
-//                 errorMessage: "Todo eklemek icin veri girmelisiniz.",
-//             });
-//         }
-//     } catch (err) {
-//         console.error("Hata oluştu:", err);
-//         next(err);
-//     }
-// });
+        if (id) {
+            const byId = await media.findMediaById(id);
+            return res.status(200).json(byId);
+        }
+    } catch (error) {
+        next({
+            statusCode: 500,
+            errorMessage: "İstenilen id ye gore veri getirilirken hata olustu.",
+            error,
+        });
+    }
+})
 
 
-// router.patch("//:id", async (req, res, next) => {
-//     try {
-//         const id = parseInt(req.params.id);
-//         const updateTodo = req.body;
+router.post("/", async (req, res, next) => {
+    try {
+        const newMedia = req.body;
+        console.log("POST ile gelen veri:", newMedia);
 
-//         if (updateTodo) {
-//             const updated = await todo.updatedTodo(updateTodo, id);
-//             return res.status(200).json(updated);
-//         }
-//     } catch (error) {
-//         next({
-//             statusCode: 500,
-//             errorMessage: "Aktor duzenlenirken hata olustu.",
-//             error,
-//         });
-//     }
-// })
+        if (newMedia.link && newMedia.name) {
+            const result = await media.addMedia(newMedia);
+
+            console.log(result);
+            return res.status(201).json(result);
+        } else {
+            next({
+                statusCode: 400,
+                errorMessage: "Sosyal medya eklemek icin isim ve link girmelisiniz.",
+            });
+        }
+    } catch (err) {
+        console.error("Hata oluştu:", err);
+        next(err);
+    }
+});
 
 
-// router.delete("//:id", async (req, res, next) => {
-//     try {
-//         const id = parseInt(req.params.id);
+router.patch("/:id", async (req, res, next) => {
+    try {
+        const id = parseInt(req.params.id);
+        const updateMedia = req.body;
 
-//         const deletedData = await todo.findTodoById(id);
-//         if (deletedData) {
-//             const deleted = await todo.deleteTodo(id);
-//             if (deleted) {
-//                 return res.status(204).end();
-//             }
-//         }
+        if (updateMedia) {
+            const updated = await media.updatedMedia(updateMedia, id);
+            return res.status(200).json(updated);
+        }
+    } catch (error) {
+        next({
+            statusCode: 500,
+            errorMessage: "Sosyal medya duzenlenirken hata olustu.",
+            error,
+        });
+    }
+})
 
-//         next({
-//             statusCode: 400,
-//             errorMessage: "Silmeye calistiginiz todo sistemde mevcut degil.",
-//         });
-//     } catch (error) {
-//         next({
-//             statusCode: 500,
-//             errorMessage: "Todo silinirken hata olustu.",
-//             error,
-//         });
-//     }
-// });
+
+router.delete("/:id", async (req, res, next) => {
+    try {
+        const id = parseInt(req.params.id);
+
+        const deletedData = await media.findMediaById(id);
+        if (deletedData) {
+            const deleted = await media.deleteMedia(id);
+            if (deleted) {
+                return res.status(204).end();
+            }
+        }
+
+        next({
+            statusCode: 400,
+            errorMessage: "Silmeye calistiginiz medya sistemde mevcut degil.",
+        });
+    } catch (error) {
+        next({
+            statusCode: 500,
+            errorMessage: "Medya silinirken hata olustu.",
+            error,
+        });
+    }
+});
 
 
 module.exports = router; 
