@@ -37,10 +37,10 @@ function Header() {
     return (
         <AppBar style={{ background: '#d58bcfff', boxShadow: 'none' }}>
             <Toolbar sx={{ px: 2 }}>
-                {/* Logo */}
+
                 <img src={RastMobile} alt="Rast Mobile" style={{ width: 50, height: 50 }} />
 
-                {/* Masaüstü Menü */}
+
                 <Box sx={{ display: { xs: "none", md: "flex" }, gap: 4, ml: 5 }}>
                     {menuItems.map((item) => (
                         <IconButton key={item.id}>
@@ -55,7 +55,7 @@ function Header() {
                     ))}
                 </Box>
 
-                {/* Sağ taraf: Sosyal Medya + Menü Butonu */}
+
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: "auto" }}>
                     <IconButton href='https://www.instagram.com/rastmobile/'>
                         <InstagramIcon sx={{ width: 25, height: 25 }} />
@@ -70,7 +70,7 @@ function Header() {
                         <img src={Behance} alt="Behance" style={{ width: 25, height: 25 }} />
                     </IconButton>
 
-                    {/* Mobil Menü (Hamburger) */}
+
                     <Box sx={{ display: { xs: "flex", md: "none" } }}>
                         <IconButton onClick={toggleDrawer(true)} color="inherit">
                             <MenuIcon />
