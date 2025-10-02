@@ -10,7 +10,6 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Behance from '../images/social.png';
 import { style_header_fonts } from '../style/styles';
-import Icon from '@mui/material/Icon';
 import MenuIcon from '@mui/icons-material/Menu';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';

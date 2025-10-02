@@ -2,12 +2,6 @@ const router = require("express").Router();
 const media = require('../data/data-model');
 const { body, validationResult } = require('express-validator');
 
-const errorValid = () => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-}
 
 router.get("/", async (req, res, next) => {
     try {
@@ -52,11 +46,15 @@ router.post("/", [
         .notEmpty()
         .withMessage("Sosyal medya linki zorunludur.")
         .isURL()
-        .withMessage("Geçerli bir URL giriniz.")
+        .withMessage("Geçerli bir URL giriniz."),
+    body("description").trim()
 
 ], async (req, res, next) => {
 
-    errorValid();
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
     try {
         const newMedia = req.body;
@@ -97,7 +95,10 @@ router.patch("/:id",
             .withMessage("Geçerli bir URL giriniz.")
     ], async (req, res, next) => {
 
-        errorValid();
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
         try {
             const id = parseInt(req.params.id);

@@ -20,7 +20,7 @@ export const getMediaData = createAsyncThunk("media/fetchMedia", async () => {
 
 
 export const deleteMediaData = createAsyncThunk("media/deleteMedia", async (id) => {
-    const res = await axios.delete(`API_URL/${id}`);
+    const res = await axios.delete(`${API_URL}/${id}`);
     return id;
 });
 

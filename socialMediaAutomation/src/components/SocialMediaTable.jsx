@@ -1,4 +1,3 @@
-import React, { use } from 'react'
 import '../style/socialMediaTable.css'
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';

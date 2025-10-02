@@ -6,7 +6,7 @@ exports.up = function (knex) {
         table.string("name").notNullable();
         table.string("description").nullable();
         table.timestamp("created_at").defaultTo(knex.fn.now());
-        table.timestamp("updated_at").defaultTo(knex.fn.now()); // kodda veritabanında güncellenme zamanını tutarken koda ekleme yapacaksın unutma
+        table.timestamp("updated_at").defaultTo(knex.fn.now());
     });
 };
 
