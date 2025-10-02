@@ -130,7 +130,7 @@ function AddAccountModal({ addRow }) {
                                 <TextField
                                     required
                                     size="small"
-                                    label="Sosyal Media mediaLinki"
+                                    label="Sosyal Medya Link"
                                     color="secondary"
                                     name="mediaLink"
                                     sx={style_modal_text}
@@ -139,7 +139,7 @@ function AddAccountModal({ addRow }) {
                                 <TextField
                                     required
                                     size="small"
-                                    label="Sosyal Media Adı"
+                                    label="Sosyal Medya Adı"
                                     color="secondary"
                                     name="mediaName"
                                     sx={style_modal_text}

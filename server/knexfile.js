@@ -1,10 +1,17 @@
+require('dotenv').config();
+
+const dbName = process.env.DB_Name;
+const dbUser = process.env.DB_USER;
+const dbPass = process.env.DB_PASS;
+
+
 module.exports = {
     development: {
         client: "pg",
         connection: {
-            database: "media_automation",
-            user: "postgres",
-            password: "i.nur0806",
+            database: dbName,
+            user: dbUser,
+            password: dbPass,
         },
     },
     migrations: {
