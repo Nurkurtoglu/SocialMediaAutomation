@@ -13,7 +13,7 @@ server.use(cors());
 dotenv.config();
 server.use("/media", mediaAutomationRouter);
 
-
+const API_URL = process.env.API_URL;
 
 server.get('/', (req, res) => {
     res.send("Express'ten Merhaba!!");
@@ -24,5 +24,5 @@ const PORT = process.env.PORT || 3000;
 
 server.use(errorHandling);
 server.listen(process.env.PORT, () => {
-    console.log("http://localhost:5000 adresinde server calisiyor...");
+    console.log(`${API_URL} adresinde server calisiyor...`);
 });

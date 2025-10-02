@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const initialState = {
     mediaInfo: [],
     // status: "idle",
@@ -9,19 +12,20 @@ const initialState = {
 
 export const getMediaData = createAsyncThunk("media/fetchMedia", async () => {
 
-    const res = await axios.get("http://localhost:5000/media");
+    const res = await axios.get(API_URL);
+    console.log(res.data)
     return res.data;
 });
 
 
 
 export const deleteMediaData = createAsyncThunk("media/deleteMedia", async (id) => {
-    const res = await axios.delete(`http://localhost:5000/media/${id}`);
+    const res = await axios.delete(`API_URL/${id}`);
     return id;
 });
 
 export const updateMediaData = createAsyncThunk("media/updateMedia", async ({ id, mediaInfo }) => {
-    const res = await axios.patch(`http://localhost:5000/media/${id}`, mediaInfo);
+    const res = await axios.patch(`${API_URL}/${id}`, mediaInfo);
     return res.data;
 });
 
@@ -38,7 +42,7 @@ export const socialMediaSlice = createSlice({
             })
             .addCase(getMediaData.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                state.mediaInfo = action.payload;
+                state.mediaInfo = Array.isArray(action.payload) ? action.payload : [];
             });
 
         builder.addCase(updateMediaData.pending, (state) => {

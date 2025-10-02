@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from "axios";
 
 
+const API_URL = import.meta.env.REACT_APP_API_URL;
+
 
 const initialState = {
     mediaModalData: [],
@@ -10,7 +12,7 @@ const initialState = {
 }
 
 export const addMediaData = createAsyncThunk("media/addMedia", async (mediaModalData) => {
-    const res = await axios.post("http://localhost:5000/media", mediaModalData);
+    const res = await axios.post(API_URL, mediaModalData);
     console.log(res);
     return res.data;
 });
