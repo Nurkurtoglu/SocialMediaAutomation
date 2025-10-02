@@ -10,14 +10,14 @@ module.exports = {
     deleteMedia
 }
 
-const ALLOWED_FIELDS = ["name", "link", "description"]; // whitelist
+const ALLOWED_FIELDS = ["name", "link", "description"];
 
 function sanitizeInput(obj) {
     const clean = {};
     if (obj == null || typeof obj !== "object") return clean;
     for (const key of ALLOWED_FIELDS) {
         if (Object.prototype.hasOwnProperty.call(obj, key) && obj[key] != null) {
-            //name/description gibi alanları temizle; link için genelde isURL ile doğrulama yeterli
+
             if (typeof obj[key] === "string") {
                 clean[key] = sanitizeHtml(obj[key], { allowedTags: [], allowedAttributes: {} }).trim();
             } else {
@@ -36,23 +36,18 @@ async function findMediaById(id) {
     return await db(dbName).where({ id }).first();
 }
 
-// async function addMedia(newMedia) {
 
-//     const inserted = await db(dbName).insert(newMedia, "id");
-//     const id = inserted[0].id;
-//     return await db(dbName).where({ id }).first();
-// }
 
 async function addMedia(newMedia) {
 
     const payload = sanitizeInput(newMedia);
 
     if (!payload.name || !payload.link) {
-        throw new Error("Missing required fields");
+        throw new Error("Eksik gerekli alanlar.");
     }
-    const [insertedId] = await db("media_automation").insert(payload, "id");
+    const [insertedId] = await db(dbName).insert(payload, "id");
     const id = insertedId.id || insertedId;
-    return await db("media_automation").where({ id }).first();
+    return await db(dbName).where({ id }).first();
 }
 
 async function updatedMedia(updateMedia, id) {
